@@ -1,0 +1,10 @@
+# Xcode junk
+*.xcuserstate
+*.xcscmblueprint
+*.xcworkspace
+*.xcuserdata
+*.xcsettings
+*.xcodeproj/project.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings
+project
+Contents
+xcschememanagement
