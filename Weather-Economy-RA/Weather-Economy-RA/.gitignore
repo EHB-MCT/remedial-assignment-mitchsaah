@@ -8,3 +8,6 @@
 project
 Contents
 xcschememanagement
+
+# Firebase config
+GoogleService-Info.plist
