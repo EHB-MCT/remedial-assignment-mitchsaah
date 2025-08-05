@@ -42,6 +42,16 @@ final class AppState: ObservableObject {
             }
     }
     
+    func signOut() {
+        do {
+            try Auth.auth().signOut()
+            self.user = nil
+            self.didFinishSetup = false
+        } catch {
+            print("[AppState] Sign-out error: \(error.localizedDescription)")
+        }
+    }
+    
     deinit {
         if let h = handle {
             Auth.auth().removeStateDidChangeListener(h)
