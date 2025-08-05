@@ -11,6 +11,12 @@ final class AppState: ObservableObject {
         }
     }
     
+    @Published var didFinishSetup: Bool = false {
+        didSet {
+            print("[AppState] didFinishSetup", didFinishSetup)
+        }
+    }
+    
     private var handle: AuthStateDidChangeListenerHandle?
     
     private init() {
