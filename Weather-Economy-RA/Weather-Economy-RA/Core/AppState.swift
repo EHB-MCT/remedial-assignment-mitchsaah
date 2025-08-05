@@ -1,5 +1,6 @@
 import Foundation
 import FirebaseAuth
+import FirebaseFirestore
 import Combine
 
 final class AppState: ObservableObject {
@@ -20,9 +21,25 @@ final class AppState: ObservableObject {
     private var handle: AuthStateDidChangeListenerHandle?
     
     private init() {
-        handle = Auth.auth().addStateDidChangeListener { [weak self] _, user in
-            self?.user = user
+        handle = Auth.auth().addStateDidChangeListener { [weak self] _, user in guard let self = self else {return}
+            self.user = user
+            
+            if let uid = user?.uid {
+                self.checkUserProfileExists(uid: uid)
+            } else {
+                self.didFinishSetup = false
+            }
         }
+    }
+    
+    private func checkUserProfileExists(uid: String) {
+        let db = Firestore.firestore()
+        db.collection("users")
+            .document(uid)
+            .getDocument { [weak self] document, _ in
+                guard let self = self else { return }
+                self.didFinishSetup = document?.exists ?? false
+            }
     }
     
     deinit {
