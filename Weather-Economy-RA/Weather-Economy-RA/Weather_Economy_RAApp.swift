@@ -18,6 +18,7 @@ struct Weather_Economy_RAApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(AppState.shared)
         }
     }
 }
