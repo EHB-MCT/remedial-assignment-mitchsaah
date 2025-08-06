@@ -14,3 +14,11 @@ extension AuthService {
         }
     }
 }
+
+extension AuthService {
+    func signIn(email: String, password: String, completion: @escaping (Error?) -> Void) {
+        Auth.auth().signIn(withEmail: email, password: password) { _, error in
+            completion(error)
+        }
+    }
+}
