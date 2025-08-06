@@ -13,6 +13,21 @@ extension AuthService {
             completion(error)
         }
     }
+    
+    private func saveUserProfile(user: User) {
+        let db = Firestore.firestore()
+        let profileData: [String: Any] = [
+            "uid": user.uid,
+            "email": user.email ?? ""
+        ]
+        db.collection("users").document(user.uid).setData(profileData) { error in
+            if let error = error {
+                print("[AuthService] Error saving user profile: \(error.localizedDescription)")
+            } else {
+                print("[AuthService] User profile saved for uid: \(user.uid)")
+            }
+        }
+    }
 }
 
 extension AuthService {
