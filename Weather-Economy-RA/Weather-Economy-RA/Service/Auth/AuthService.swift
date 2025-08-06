@@ -22,3 +22,9 @@ extension AuthService {
         }
     }
 }
+
+extension AuthService {
+    func signOut() {
+        try? Auth.auth().signOut()
+    }
+}
