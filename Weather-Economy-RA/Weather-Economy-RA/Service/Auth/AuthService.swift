@@ -9,7 +9,10 @@ final class AuthService {
 
 extension AuthService {
     func signUp(email: String, password: String, completion: @escaping (Error?) -> Void) {
-        Auth.auth().createUser(withEmail: email, password: password) { _, error in
+        Auth.auth().createUser(withEmail: email, password: password) { result, error in
+            if let user = result?.user {
+                self.saveUserProfile(user: user)
+            }
             completion(error)
         }
     }
