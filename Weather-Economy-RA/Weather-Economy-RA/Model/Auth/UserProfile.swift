@@ -21,4 +21,18 @@ extension UserProfile {
             "createdAt": FieldValue.serverTimestamp()
         ]
     }
+    
+    init?(uid: String, data: [String: Any]) {
+        guard let email = data["email"] as? String else { return nil }
+        self.uid = uid
+        self.email = email
+        self.firstName = data["firstName"] as? String
+        self.lastName  = data["lastName"]  as? String
+        
+        if let ts = data["createdAt"] as? Timestamp {
+            self.createdAt = ts.dateValue()
+        } else {
+            self.createdAt = nil
+        }
+    }
 }
