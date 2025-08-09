@@ -35,4 +35,12 @@ extension UserProfile {
             self.createdAt = nil
         }
     }
+    
+    init(uid: String, email: String) {
+        self.uid = uid
+        self.email = email
+        self.firstName = nil
+        self.lastName  = nil
+        self.createdAt = nil
+    }
 }
