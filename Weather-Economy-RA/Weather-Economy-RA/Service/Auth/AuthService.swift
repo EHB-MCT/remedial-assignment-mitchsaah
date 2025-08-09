@@ -19,11 +19,9 @@ extension AuthService {
     
     private func saveUserProfile(user: User) {
         let db = Firestore.firestore()
-        let profileData: [String: Any] = [
-            "uid": user.uid,
-            "email": user.email ?? ""
-        ]
-        db.collection("users").document(user.uid).setData(profileData) { error in
+        let profile = UserProfile(uid: user.uid, email: user.email ?? "")
+        db.collection("users").document(user.uid)
+            .setData(profile.asDict, merge: true) { error in
             if let error = error {
                 print("[AuthService] Error saving user profile: \(error.localizedDescription)")
             } else {
@@ -31,17 +29,13 @@ extension AuthService {
             }
         }
     }
-}
-
-extension AuthService {
+    
     func signIn(email: String, password: String, completion: @escaping (Error?) -> Void) {
         Auth.auth().signIn(withEmail: email, password: password) { _, error in
             completion(error)
         }
     }
-}
-
-extension AuthService {
+    
     func signOut() {
         try? Auth.auth().signOut()
     }
