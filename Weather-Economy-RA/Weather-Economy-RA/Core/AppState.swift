@@ -6,7 +6,7 @@ import Combine
 final class AppState: ObservableObject {
     static let shared = AppState()
     
-    @Published var user: User? = Auth.auth().currentUser {
+    @Published var user: UserProfile? {
         didSet {
             print("[AppState] user changed", user?.uid ?? "nil")
         }
@@ -21,24 +21,32 @@ final class AppState: ObservableObject {
     private var handle: AuthStateDidChangeListenerHandle?
     
     private init() {
-        handle = Auth.auth().addStateDidChangeListener { [weak self] _, user in guard let self = self else {return}
-            self.user = user
+        handle = Auth.auth().addStateDidChangeListener { [weak self] _, authUser in guard let self = self else {return}
             
-            if let uid = user?.uid {
-                self.checkUserProfileExists(uid: uid)
+            if let authUser = authUser {
+                self.fetchUserProfile(uid: authUser.uid)
             } else {
+                self.user = nil
                 self.didFinishSetup = false
             }
         }
     }
     
-    private func checkUserProfileExists(uid: String) {
+    private func fetchUserProfile(uid: String) {
         let db = Firestore.firestore()
         db.collection("users")
             .document(uid)
-            .getDocument { [weak self] document, _ in
+            .getDocument { [weak self] document, error in
                 guard let self = self else { return }
-                self.didFinishSetup = document?.exists ?? false
+                
+                if let data = document?.data(),
+                   let profile = UserProfile(uid: uid, data: data) {
+                    self.user = profile
+                    self.didFinishSetup = true
+                } else {
+                    self.user = nil
+                    self.didFinishSetup = false
+                }
             }
     }
     
