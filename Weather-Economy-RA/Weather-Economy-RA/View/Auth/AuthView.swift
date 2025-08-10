@@ -22,6 +22,13 @@ struct AuthView: View {
                         .foregroundColor(.green)
                 }
                 .padding(.top, 40)
+                
+                // Title
+                Text(vm.isLogin ? "Login" : "Register")
+                    .font(.system(size: 22, weight: .semibold))
+                    .foregroundColor(.black)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal)
             }
         }
     }
