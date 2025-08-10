@@ -29,6 +29,32 @@ struct AuthView: View {
                     .foregroundColor(.black)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal)
+                
+                // Form
+                VStack(spacing: 16) {
+                    
+                    // Email
+                    ZStack(alignment: .leading) {
+                        if vm.email.isEmpty {
+                            Text("E-mail")
+                                .foregroundColor(.gray)
+                                .padding(.leading, 16)
+                        }
+                        TextField("", text: $vm.email)
+                            .keyboardType(.emailAddress)
+                            .textInputAutocapitalization(.never)
+                            .autocorrectionDisabled(true)
+                            .foregroundColor(.black)
+                            .padding(12)
+                    }
+                    .background(Color.clear)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.gray.opacity(0.5), lineWidth: 1)
+                    )
+                    .cornerRadius(8)
+                    .padding(.horizontal)
+                }
             }
         }
     }
