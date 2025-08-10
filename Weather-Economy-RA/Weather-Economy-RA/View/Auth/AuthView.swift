@@ -113,6 +113,24 @@ struct AuthView: View {
                                 .cornerRadius(8)
                         }
                         .padding(.horizontal)
+                        
+                        Spacer(minLength: 12)
+
+                        // Toggle
+                        Button {
+                            vm.isLogin.toggle()
+                            vm.errorMessage = nil
+                        } label: {
+                            (
+                                Text(vm.isLogin ? "Don't have an account yet? " : "Already have an account? ")
+                                    .foregroundColor(.black)
+                                +
+                                Text(vm.isLogin ? "Register here!" : "Log in here!")
+                                    .foregroundColor(.green)
+                            )
+                            .font(.footnote)
+                        }
+                        .padding(.bottom, 16)
                 }
             }
         }
