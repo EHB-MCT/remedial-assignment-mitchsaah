@@ -7,5 +7,19 @@ struct DashboardView: View {
         Text("Dashboard")
             .font(.largeTitle)
             .padding()
+        
+        Spacer()
+                    
+        Button(action: {
+            appState.signOut()
+        }) {
+            Text("Log out")
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(Color.red)
+                .cornerRadius(8)
+        }
+        .padding(.horizontal)
     }
 }
