@@ -1,24 +1,17 @@
-//
-//  ContentView.swift
-//  Weather-Economy-RA
-//
-//  Created by Mitch Saah on 04/08/2025.
-//
 
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
-    }
-}
+    @EnvironmentObject private var appState: AppState
 
-#Preview {
-    ContentView()
+    var body: some View {
+        Group {
+            if appState.user == nil {
+                AuthView()
+            } else {
+                DashboardView()
+            }
+        }
+        .animation(.easeInOut, value: appState.user != nil)
+    }
 }
