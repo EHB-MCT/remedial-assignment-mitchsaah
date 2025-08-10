@@ -94,6 +94,25 @@ struct AuthView: View {
                             .cornerRadius(8)
                             .padding(.horizontal)
                         }
+                    
+                        // Error
+                        if let msg = vm.errorMessage {
+                            Text(msg)
+                                .foregroundColor(.red)
+                                .multilineTextAlignment(.center)
+                                .padding(.horizontal)
+                        }
+
+                        // Submit
+                        Button(action: vm.submit) {
+                            Text(vm.isLogin ? "Log in" : "Maak account")
+                                .frame(maxWidth: .infinity)
+                                .padding(12)
+                                .background(Color.green)
+                                .foregroundColor(.white)
+                                .cornerRadius(8)
+                        }
+                        .padding(.horizontal)
                 }
             }
         }
