@@ -73,6 +73,27 @@ struct AuthView: View {
                         )
                         .cornerRadius(8)
                         .padding(.horizontal)
+                    
+                        // Confirm password (register only)
+                        if !vm.isLogin {
+                            ZStack(alignment: .leading) {
+                                if vm.confirmPassword.isEmpty {
+                                    Text("Confirm password")
+                                        .foregroundColor(.gray)
+                                        .padding(.leading, 16)
+                                }
+                                SecureField("", text: $vm.confirmPassword)
+                                    .foregroundColor(.black)
+                                    .padding(12)
+                            }
+                            .background(Color.clear)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color.gray.opacity(0.5), lineWidth: 1)
+                            )
+                            .cornerRadius(8)
+                            .padding(.horizontal)
+                        }
                 }
             }
         }
