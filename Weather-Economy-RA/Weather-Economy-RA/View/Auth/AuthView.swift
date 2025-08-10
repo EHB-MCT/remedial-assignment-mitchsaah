@@ -54,6 +54,25 @@ struct AuthView: View {
                     )
                     .cornerRadius(8)
                     .padding(.horizontal)
+                    
+                    // Password
+                    ZStack(alignment: .leading) {
+                        if vm.password.isEmpty {
+                            Text("Password")
+                                .foregroundColor(.gray)
+                                .padding(.leading, 16)
+                        }
+                        SecureField("", text: $vm.password)
+                            .foregroundColor(.black)
+                            .padding(12)
+                    }
+                    .background(Color.clear)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.gray.opacity(0.5), lineWidth: 1)
+                        )
+                        .cornerRadius(8)
+                        .padding(.horizontal)
                 }
             }
         }
