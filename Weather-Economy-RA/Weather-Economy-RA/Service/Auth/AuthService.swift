@@ -39,4 +39,9 @@ extension AuthService {
     func signOut() {
         try? Auth.auth().signOut()
     }
+    
+    func signInWithGoogle(idToken: String,
+                          accessToken: String,
+                          completion: @escaping (Error?) -> Void) {
+    }
 }
