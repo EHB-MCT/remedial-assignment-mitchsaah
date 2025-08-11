@@ -51,6 +51,13 @@ extension AuthService {
                 completion(error)
                 return
             }
+            
+            guard let user = result?.user else {
+              completion(NSError(domain: "AuthService",
+                                 code: -1,
+                                 userInfo: [NSLocalizedDescriptionKey: "No user after Google sign-in"]))
+              return
+            }
         }
     }
 }
