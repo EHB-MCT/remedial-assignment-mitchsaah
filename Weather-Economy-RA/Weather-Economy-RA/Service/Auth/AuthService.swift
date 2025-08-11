@@ -58,6 +58,15 @@ extension AuthService {
                                  userInfo: [NSLocalizedDescriptionKey: "No user after Google sign-in"]))
               return
             }
+            
+            let db = Firestore.firestore()
+            let docRef = db.collection("users").document(user.uid)
+            docRef.getDocument { snap, _ in
+                if snap?.exists == true {
+                    completion(nil)
+                    return
+                }
+            }
         }
     }
 }
