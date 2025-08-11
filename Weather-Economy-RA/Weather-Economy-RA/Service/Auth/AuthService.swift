@@ -66,6 +66,10 @@ extension AuthService {
                     completion(nil)
                     return
                 }
+                let profile = UserProfile(uid: user.uid, email: user.email ?? "")
+                docRef.setData(profile.asDict, merge: true) { setErr in
+                    completion(setErr)
+                }
             }
         }
     }
