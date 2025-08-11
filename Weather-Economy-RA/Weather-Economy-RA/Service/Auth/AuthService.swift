@@ -43,5 +43,14 @@ extension AuthService {
     func signInWithGoogle(idToken: String,
                           accessToken: String,
                           completion: @escaping (Error?) -> Void) {
+        
+        let cred = GoogleAuthProvider.credential(withIDToken: idToken, accessToken:accessToken)
+
+        Auth.auth().signIn(with: cred) { result, error in
+            if let error = error {
+                completion(error)
+                return
+            }
+        }
     }
 }
