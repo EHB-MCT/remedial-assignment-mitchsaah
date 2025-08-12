@@ -45,5 +45,13 @@ final class AuthViewModel: ObservableObject {
             return
         }
         GIDSignIn.sharedInstance.configuration = GIDConfiguration(clientID: clientID)
+        
+        guard
+            let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+            let rootVC = scene.windows.first(where: { $0.isKeyWindow })?.rootViewController
+        else {
+            errorMessage = "Could not find a window to present Google Sign-In."
+            return
+        }
     }
 }
