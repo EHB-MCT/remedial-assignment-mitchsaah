@@ -1,5 +1,8 @@
 import Foundation
 import Combine
+import UIKit
+import FirebaseCore
+import GoogleSignIn
 
 final class AuthViewModel: ObservableObject {
     @Published var email = ""
@@ -7,6 +10,8 @@ final class AuthViewModel: ObservableObject {
     @Published var isLogin = true
     @Published var errorMessage: String?
     @Published var confirmPassword = ""   // For registering only
+       
+    private let authService = AuthService.shared
     
     func submit() {
         errorMessage = nil
