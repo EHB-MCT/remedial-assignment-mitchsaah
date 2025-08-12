@@ -10,6 +10,7 @@ final class AuthViewModel: ObservableObject {
     @Published var isLogin = true
     @Published var errorMessage: String?
     @Published var confirmPassword = ""   // For registering only
+    @Published var isLoading = false
        
     private let authService = AuthService.shared
     
@@ -52,6 +53,36 @@ final class AuthViewModel: ObservableObject {
         else {
             errorMessage = "Could not find a window to present Google Sign-In."
             return
+        }
+        
+        isLoading = true
+        GIDSignIn.sharedInstance.signIn(withPresenting: rootVC) { [weak self] result, error in
+            guard let self = self else { return }
+            if let error = error {
+                DispatchQueue.main.async {
+                    self.isLoading = false
+                    self.errorMessage = error.localizedDescription
+                }
+                return
+            }
+            
+            guard let gUser = result?.user,
+                  let idToken = gUser.idToken?.tokenString else {
+                DispatchQueue.main.async {
+                    self.isLoading = false
+                    self.errorMessage = "Google sign-in failed (no token)."
+                }
+                return
+            }
+            
+            let accessToken = gUser.accessToken.tokenString
+            
+            self.authService.signInWithGoogle(idToken: idToken, accessToken: accessToken) { err in
+                DispatchQueue.main.async {
+                    self.isLoading = false
+                    if let err = err { self.errorMessage = err.localizedDescription }
+                }
+            }
         }
     }
 }
