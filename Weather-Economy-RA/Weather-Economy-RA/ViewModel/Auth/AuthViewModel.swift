@@ -39,5 +39,11 @@ final class AuthViewModel: ObservableObject {
     @MainActor
     func googleSignIn() {
         errorMessage = nil
+        
+        guard let clientID = FirebaseApp.app()?.options.clientID else {
+            errorMessage = "Missing Firebase client ID"
+            return
+        }
+        GIDSignIn.sharedInstance.configuration = GIDConfiguration(clientID: clientID)
     }
 }
