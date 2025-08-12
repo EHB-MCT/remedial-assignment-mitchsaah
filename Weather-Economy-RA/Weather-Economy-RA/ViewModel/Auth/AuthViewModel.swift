@@ -35,4 +35,9 @@ final class AuthViewModel: ObservableObject {
             }
         }
     }
+    
+    @MainActor
+    func googleSignIn() {
+        errorMessage = nil
+    }
 }
