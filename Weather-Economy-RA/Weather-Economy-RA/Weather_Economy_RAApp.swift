@@ -26,6 +26,9 @@ struct Weather_Economy_RAApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(AppState.shared)
+                .onOpenURL { url in
+                    _ = GIDSignIn.sharedInstance.handle(url)
+                }
         }
     }
 }
