@@ -113,8 +113,19 @@ struct AuthView: View {
                                 .cornerRadius(8)
                         }
                         .padding(.horizontal)
-                        
-                        Spacer(minLength: 12)
+                
+                        // Divider
+                        HStack(alignment: .center) {
+                            Rectangle().fill(Color.black).frame(height: 1)
+                            Text("Or go further with")
+                                .font(.footnote)
+                                .foregroundColor(.black)
+                                .padding(.horizontal, 8)
+                                .fixedSize()
+                            Rectangle().fill(Color.black).frame(height: 1)
+                        }
+                        .padding(.horizontal)
+                        .padding(.top, 8)
 
                         // Toggle
                         Button {
