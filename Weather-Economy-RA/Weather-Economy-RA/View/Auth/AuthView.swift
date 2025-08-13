@@ -126,6 +126,37 @@ struct AuthView: View {
                         }
                         .padding(.horizontal)
                         .padding(.top, 8)
+                    
+                        Button(action: vm.googleSignIn) {
+                            HStack {
+                                if UIImage(named: "google-icon") != nil {
+                                    Image("google-icon")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 24, height: 24)
+                                } else {
+                                    Image(systemName: "g.circle")
+                                        .imageScale(.large)
+                                }
+                                
+                                Spacer()
+                                
+                                Text("Google")
+                                    .foregroundColor(.primary)
+                                
+                                Spacer()
+                            }
+                            .padding(.horizontal, 16)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 54)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.gray.opacity(0.5), lineWidth: 1)
+                            )
+                            .padding(.horizontal)
+                                            
+                        Spacer()
 
                         // Toggle
                         Button {
