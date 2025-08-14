@@ -35,6 +35,21 @@ final class AppState: ObservableObject {
     
     private func attachProfileListener(uid: String) {
         
+        profileListener = Firestore.firestore()
+            .collection("users")
+            .document(uid)
+            .addSnapshotListener { [weak self] snap, _ in
+                guard let self = self else { return }
+                        
+                if let data = snap?.data(),
+                    let profile = UserProfile(uid: uid, data: data) {
+                    self.user = profile
+                    self.didFinishSetup = true
+                } else {
+                    self.user = nil
+                    self.didFinishSetup = false
+                }
+            }
     }
     
     private func fetchUserProfile(uid: String) {
