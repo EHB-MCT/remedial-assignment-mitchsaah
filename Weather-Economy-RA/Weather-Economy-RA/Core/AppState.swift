@@ -24,8 +24,11 @@ final class AppState: ObservableObject {
     private init() {
         handle = Auth.auth().addStateDidChangeListener { [weak self] _, authUser in guard let self = self else {return}
             
+            self.profileListener?.remove()
+            self.profileListener = nil
+            
             if let authUser = authUser {
-                self.fetchUserProfile(uid: authUser.uid)
+                self.attachProfileListener(uid: authUser.uid)
             } else {
                 self.user = nil
                 self.didFinishSetup = false
