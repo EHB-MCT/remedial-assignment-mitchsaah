@@ -18,6 +18,7 @@ final class AppState: ObservableObject {
         }
     }
     
+    private var profileListener: ListenerRegistration?
     private var handle: AuthStateDidChangeListenerHandle?
     
     private init() {
@@ -30,6 +31,10 @@ final class AppState: ObservableObject {
                 self.didFinishSetup = false
             }
         }
+    }
+    
+    private func attachProfileListener(uid: String) {
+        
     }
     
     private func fetchUserProfile(uid: String) {
