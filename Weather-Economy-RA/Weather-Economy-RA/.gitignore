@@ -8,6 +8,10 @@
 project
 Contents
 xcschememanagement
+Weather-Economy-RA/Weather-Economy-RA/Info.plist
 
 # Firebase config
 GoogleService-Info.plist
+
+# macOS junk
+.DS_Store
