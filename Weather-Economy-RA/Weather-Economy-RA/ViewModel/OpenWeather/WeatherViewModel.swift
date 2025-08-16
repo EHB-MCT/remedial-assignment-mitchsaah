@@ -28,8 +28,8 @@ extension WeatherViewModel {
                     self.condition = data.current.weather.first?.main
                     self.rain1h = data.current.rain?.oneHour
                     
-                case .failure:
-                    break
+                case .failure(let error):
+                    self.errorMessage = error.localizedDescription
                 }
             }
         }
