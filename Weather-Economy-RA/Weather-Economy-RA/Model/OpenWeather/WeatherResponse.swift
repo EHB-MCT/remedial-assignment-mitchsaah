@@ -14,3 +14,11 @@ struct Current: Decodable {
 struct Condition: Decodable {
     let main: String
 }
+
+struct Rain: Decodable {
+    let oneHour: Double?
+
+    enum CodingKeys: String, CodingKey {
+        case oneHour = "1h"
+    }
+}
