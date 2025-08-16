@@ -10,3 +10,9 @@ final class WeatherViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var errorMessage: String?
 }
+
+extension WeatherViewModel {
+    func load(lat: Double = 50.8503, lon: Double = 4.3517) {
+        guard !isLoading else { return }
+    }
+}
