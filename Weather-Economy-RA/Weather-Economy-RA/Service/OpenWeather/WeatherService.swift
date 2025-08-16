@@ -11,4 +11,23 @@ final class WeatherService {
         }
         return key
     }
+    
+    func fetchCurrent(lat: Double, lon: Double, completion: @escaping (Result<WeatherResponse, Error>) -> Void) {
+        let params: [String: Any] = [
+            "lat": lat,
+            "lon": lon,
+            "exclude": "minutely,hourly,daily,alerts",
+            "units": "metric",
+            "appid": apiKey
+        ]
+        
+        AF.request(baseURL, parameters: params)
+            .validate()
+            .responseDecodable(of: WeatherResponse.self) { response in
+                switch response.result {
+                case .success(let data): completion(.success(data))
+                case .failure(let error): completion(.failure(error))
+                }
+            }
+    }
 }
