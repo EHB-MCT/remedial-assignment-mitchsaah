@@ -10,3 +10,7 @@ struct Current: Decodable {
     let weather: [Condition]
     let rain: Rain?
 }
+
+struct Condition: Decodable {
+    let main: String
+}
