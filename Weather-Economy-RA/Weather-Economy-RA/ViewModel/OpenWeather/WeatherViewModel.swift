@@ -24,6 +24,9 @@ extension WeatherViewModel {
                 switch result {
                 case .success(let data):
                     self.uvi = data.current.uvi
+                    self.cloudiness = data.current.clouds
+                    self.condition = data.current.weather.first?.main
+                    self.rain1h = data.current.rain?.oneHour
                     
                 case .failure:
                     break
