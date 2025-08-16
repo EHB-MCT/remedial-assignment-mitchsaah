@@ -21,6 +21,13 @@ extension WeatherViewModel {
             Task { @MainActor in
                 guard let self else { return }
                 self.isLoading = false
+                switch result {
+                case .success(let data):
+                    self.uvi = data.current.uvi
+                    
+                case .failure:
+                    break
+                }
             }
         }
     }
