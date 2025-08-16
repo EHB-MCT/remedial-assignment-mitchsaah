@@ -20,6 +20,7 @@ extension WeatherViewModel {
         WeatherService.shared.fetchCurrent(lat: lat, lon: lon) { [weak self] result in
             Task { @MainActor in
                 guard let self else { return }
+                self.isLoading = false
             }
         }
     }
