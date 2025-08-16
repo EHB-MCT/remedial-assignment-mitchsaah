@@ -16,5 +16,11 @@ extension WeatherViewModel {
         guard !isLoading else { return }
         isLoading = true
         errorMessage = nil
+        
+        WeatherService.shared.fetchCurrent(lat: lat, lon: lon) { [weak self] result in
+            Task { @MainActor in
+                guard let self else { return }
+            }
+        }
     }
 }
