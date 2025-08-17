@@ -21,6 +21,12 @@ struct StatCard: View {
                 
                 Text(value)
                     .font(.headline)
+                
+                if let subtitle {
+                    Text(subtitle)
+                        .font(.caption2)
+                        .foregroundColor(.secondary)
+                }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
