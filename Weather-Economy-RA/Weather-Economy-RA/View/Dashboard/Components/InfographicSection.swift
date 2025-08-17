@@ -8,6 +8,8 @@ struct InfographicSection: View {
     let estKWh: Double?
     let estEUR: Double?
     let onRefresh: () -> Void
+    
+    @State private var rightColumnHeight: CGFloat = 0
 
     var body: some View {
         EmptyView()
