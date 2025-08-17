@@ -29,5 +29,10 @@ struct ValueTile: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
+        .padding(14)
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(Color(.secondarySystemBackground))
+        )
     }
 }
