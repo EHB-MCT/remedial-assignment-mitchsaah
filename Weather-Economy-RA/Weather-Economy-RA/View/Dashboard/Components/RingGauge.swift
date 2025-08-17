@@ -25,8 +25,26 @@ struct RingGauge: View {
                             ),
                             style: StrokeStyle(lineWidth: lineWidth, lineCap: .round)
                         )
+                        .rotationEffect(.degrees(-90))
+                        .animation(.easeOut(duration: 0.6), value: progress)
                 }
                 .padding(18)
+                
+                VStack(spacing: 2) {
+                    Text(valueText)
+                        .font(.footnote)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
+                    
+                    Text(title)
+                        .font(.caption2)
+                        .foregroundColor(.secondary)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .padding(.horizontal, 8)
             }
             .padding(8)
         }
