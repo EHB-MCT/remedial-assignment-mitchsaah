@@ -27,7 +27,27 @@ struct InfographicSection: View {
                     .frame(width: columnWidth,
                            height: max(190, rightColumnHeight))
                     .animation(.easeOut(duration: 0.25), value: rightColumnHeight)
+                    
+                    VStack(spacing: spacing) {
+                        StatCard(
+                            title: "Cloud Cover",
+                            value: Metric.percent(clouds),
+                            subtitle: "Less clouds → more output",
+                            systemImage: "cloud.fill"
+                        )
+                        
+                        let raining = (condition == "Rain") || ((rain1h ?? 0) > 0)
+                        StatCard(
+                            title: "Rain (last hour)",
+                            value: (rain1h ?? 0).formatted(.number.precision(.fractionLength(1))) + " mm",
+                            subtitle: raining ? "Rain detected" : "No rain",
+                            systemImage: raining ? "cloud.rain.fill" : "drop.degreesign"
+                        )
+                    }
+                    .frame(width: columnWidth)
+                    .background(HeightReader())
                 }
+                .onPreferenceChange(HeightKey.self) { rightColumnHeight = $0 }
             }
         }
     }
