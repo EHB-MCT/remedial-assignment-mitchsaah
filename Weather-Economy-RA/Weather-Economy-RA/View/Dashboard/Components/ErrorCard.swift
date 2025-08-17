@@ -13,6 +13,10 @@ struct ErrorCard: View {
                 .multilineTextAlignment(.center)
                 .lineLimit(nil)
                 .fixedSize(horizontal: false, vertical: true)
+            
+            Button("Try again", action: retry)
+                .buttonStyle(.borderedProminent)
+                .frame(maxWidth: .infinity)
         }
     }
 }
