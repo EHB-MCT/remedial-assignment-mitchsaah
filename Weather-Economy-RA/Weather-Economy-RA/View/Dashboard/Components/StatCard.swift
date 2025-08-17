@@ -18,14 +18,23 @@ struct StatCard: View {
                 Text(title)
                     .font(.footnote)
                     .foregroundColor(.secondary)
+                    .multilineTextAlignment(.leading)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
                 
                 Text(value)
                     .font(.headline)
+                    .multilineTextAlignment(.leading)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
                 
                 if let subtitle {
                     Text(subtitle)
                         .font(.caption2)
                         .foregroundColor(.secondary)
+                        .multilineTextAlignment(.leading)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
