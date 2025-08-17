@@ -48,7 +48,32 @@ struct InfographicSection: View {
                     .background(HeightReader())
                 }
                 .onPreferenceChange(HeightKey.self) { rightColumnHeight = $0 }
+                
+                HStack(spacing: spacing) {
+                    ValueTile(
+                        title: "Estimated Output",
+                        value: Metric.twoDecimals(estKWh) + " kWh",
+                        systemImage: "bolt.fill"
+                    )
+                    .frame(width: columnWidth)
+                    
+                    ValueTile(
+                        title: "Estimated Value",
+                        value: "€ " + Metric.twoDecimals(estEUR),
+                        systemImage: "eurosign.circle.fill"
+                    )
+                    .frame(width: columnWidth)
+                }
+                
+                Button {
+                    onRefresh()
+                } label: {
+                    Label("Refresh", systemImage: "arrow.clockwise")
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.borderedProminent)
             }
         }
+        .frame(height: max(260, rightColumnHeight + 120))
     }
 }
