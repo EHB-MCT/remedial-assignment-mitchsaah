@@ -9,6 +9,9 @@ final class WeatherViewModel: ObservableObject {
 
     @Published var isLoading = false
     @Published var errorMessage: String?
+    
+    @Published var estimatedKWh: Double?
+    @Published var estimatedEUR: Double?
 }
 
 extension WeatherViewModel {
@@ -34,4 +37,6 @@ extension WeatherViewModel {
             }
         }
     }
+    
+    func refresh() { load() }
 }
