@@ -18,5 +18,10 @@ struct ErrorCard: View {
                 .buttonStyle(.borderedProminent)
                 .frame(maxWidth: .infinity)
         }
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(Color(.secondarySystemBackground))
+        )
     }
 }
