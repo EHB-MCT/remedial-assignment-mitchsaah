@@ -4,6 +4,13 @@ struct DashboardView: View {
     @EnvironmentObject private var appState: AppState
     @StateObject private var weatherVM = WeatherViewModel()
     
+    private var loggedInIdentity: String {
+        if let user = Auth.auth().currentUser {
+            return user.email ?? user.uid
+        }
+        return "unknown"
+    }
+    
     var body: some View {
         VStack(spacing: 16) {
             HStack {
@@ -39,6 +46,8 @@ struct DashboardView: View {
             
             Spacer()
             
+            AuthBadge(identity: loggedInIdentity)
+    
             Button(action: {
                 appState.signOut()
             }) {
