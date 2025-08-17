@@ -31,4 +31,38 @@ enum UserPrefsService {
                 } catch { completion(nil) }
             }
     }
+    
+    // Solar
+    static func saveSolar(_ p: SolarPrefs, completion: ((Error?) -> Void)? = nil) {
+        guard let uid = Auth.auth().currentUser?.uid else {
+            completion?(nil)
+            return
+        }
+        let doc = db.collection("users").document(uid)
+            .collection("preferences").document("solar")
+        do {
+            let data = try JSONSerialization.jsonObject(with: try JSONEncoder().encode(p)) as? [String: Any] ?? [:]
+            var dict = data
+            dict["updatedAt"] = FieldValue.serverTimestamp()
+            doc.setData(dict, merge: true, completion: completion)
+        } catch {
+            completion?(error)
+        }
+    }
+
+    static func loadSolar(completion: @escaping (SolarPrefs?) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { completion(nil); return }
+        db.collection("users").document(uid)
+            .collection("preferences").document("solar")
+            .getDocument { snap, _ in
+                guard let d = snap?.data() else { return completion(nil) }
+                do {
+                    let json = try JSONSerialization.data(withJSONObject: d)
+                    let prefs = try JSONDecoder().decode(SolarPrefs.self, from: json)
+                    completion(prefs)
+                } catch {
+                    completion(nil)
+                }
+            }
+    }
 }
