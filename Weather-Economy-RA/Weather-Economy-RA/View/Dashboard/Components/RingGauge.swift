@@ -7,6 +7,9 @@ struct RingGauge: View {
     var lineWidth: CGFloat = 14
 
     var body: some View {
-        EmptyView()
+        ZStack {
+            RoundedRectangle(cornerRadius: 16)
+                .fill(Color(.secondarySystemBackground))
+        }
     }
 }
