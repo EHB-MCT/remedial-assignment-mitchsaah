@@ -10,4 +10,9 @@ enum Metric {
         default: return "Extreme"
         }
     }
+    
+    static func uvProgress(_ uvi: Double) -> Double {
+        let capped = min(max(uvi, 0), 11)
+        return capped / 11.0
+    }
 }
