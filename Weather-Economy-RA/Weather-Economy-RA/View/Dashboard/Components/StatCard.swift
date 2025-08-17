@@ -39,5 +39,10 @@ struct StatCard: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
+        .padding(14)
+        .background(
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .fill(Color(.secondarySystemBackground))
+        )
     }
 }
