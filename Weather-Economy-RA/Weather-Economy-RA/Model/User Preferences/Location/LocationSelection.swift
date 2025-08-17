@@ -10,3 +10,7 @@ struct LocationSelection: Codable, Equatable, Hashable {
 
     var coordinate: CLLocationCoordinate2D { .init(latitude: lat, longitude: lon) }
 }
+
+extension LocationSelection {
+    static let brussels = LocationSelection(name: "Brussels", lat: 50.8503, lon: 4.3517, source: .manual)
+}
