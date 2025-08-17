@@ -15,4 +15,9 @@ enum Metric {
         let capped = min(max(uvi, 0), 11)
         return capped / 11.0
     }
+    
+    static func percent(_ x: Int?) -> String {
+        guard let x else { return "-" }
+        return "\(x)%"
+    }
 }
