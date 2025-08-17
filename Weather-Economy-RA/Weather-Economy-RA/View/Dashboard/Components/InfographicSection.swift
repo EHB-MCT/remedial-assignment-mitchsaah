@@ -12,6 +12,11 @@ struct InfographicSection: View {
     @State private var rightColumnHeight: CGFloat = 0
 
     var body: some View {
-        EmptyView()
+        GeometryReader { geo in
+            let spacing: CGFloat = 12
+            let columnWidth = (geo.size.width - spacing) / 2
+            
+            EmptyView()
+        }
     }
 }
