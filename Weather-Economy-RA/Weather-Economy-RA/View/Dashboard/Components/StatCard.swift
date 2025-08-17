@@ -13,6 +13,16 @@ struct StatCard: View {
                 .padding(10)
                 .background(.ultraThinMaterial)
                 .clipShape(RoundedRectangle(cornerRadius: 12))
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text(title)
+                    .font(.footnote)
+                    .foregroundColor(.secondary)
+                
+                Text(value)
+                    .font(.headline)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 }
