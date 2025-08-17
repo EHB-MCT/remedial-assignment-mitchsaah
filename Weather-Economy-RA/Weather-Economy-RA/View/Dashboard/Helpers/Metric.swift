@@ -25,4 +25,9 @@ enum Metric {
         guard let x else { return "-" }
         return x.formatted(.number.precision(.fractionLength(1)))
     }
+    
+    static func twoDecimals(_ x: Double?) -> String {
+        guard let x else { return "-" }
+        return x.formatted(.number.precision(.fractionLength(2)))
+    }
 }
