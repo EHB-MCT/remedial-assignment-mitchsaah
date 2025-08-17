@@ -20,4 +20,9 @@ enum Metric {
         guard let x else { return "-" }
         return "\(x)%"
     }
+    
+    static func oneDecimal(_ x: Double?) -> String {
+        guard let x else { return "-" }
+        return x.formatted(.number.precision(.fractionLength(1)))
+    }
 }
