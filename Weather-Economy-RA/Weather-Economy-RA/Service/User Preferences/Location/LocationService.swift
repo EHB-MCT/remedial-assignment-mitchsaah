@@ -26,4 +26,29 @@ final class LocationService: NSObject, CLLocationManagerDelegate {
             pending = nil
         }
     }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedWhenInUse || status == .authorizedAlways {
+            manager.requestLocation()
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let c = locations.first?.coordinate {
+            pending?(.success(c))
+        } else {
+            let err = NSError(
+                domain: "Location",
+                code: 2,
+                userInfo: [NSLocalizedDescriptionKey: "No coordinates."]
+            )
+            pending?(.failure(err))
+        }
+        pending = nil
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        pending?(.failure(error))
+        pending = nil
+    }
 }
