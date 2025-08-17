@@ -6,6 +6,12 @@ struct ValueTile: View {
     let systemImage: String
 
     var body: some View {
-        EmptyView()
+        HStack(spacing: 12) {
+            Image(systemName: systemImage)
+                .font(.title3)
+                .padding(10)
+                .background(.ultraThinMaterial)
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+        }
     }
 }
