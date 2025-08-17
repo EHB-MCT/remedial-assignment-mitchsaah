@@ -11,4 +11,8 @@ final class LocationService: NSObject, CLLocationManagerDelegate {
         manager.delegate = self
         manager.desiredAccuracy = kCLLocationAccuracyKilometer
     }
+    
+    func requestOnce(_ completion: @escaping (Result<CLLocationCoordinate2D, Error>) -> Void) {
+        pending = completion
+    }
 }
