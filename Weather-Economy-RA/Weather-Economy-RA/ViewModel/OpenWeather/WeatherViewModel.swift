@@ -12,6 +12,10 @@ final class WeatherViewModel: ObservableObject {
     
     @Published var estimatedKWh: Double?
     @Published var estimatedEUR: Double?
+    
+    @Published var selectedLocation: LocationSelection = .brussels
+    @Published var placeName: String = LocationSelection.brussels.name
+    @Published var solarPrefs: SolarPrefs = .default
 }
 
 extension WeatherViewModel {
@@ -38,5 +42,15 @@ extension WeatherViewModel {
         }
     }
     
-    func refresh() { load() }
+    func loadSelected() {
+            load(lat: selectedLocation.lat, lon: selectedLocation.lon)
+        }
+    
+    func refresh() { loadSelected() }
+    
+    func updateLocation(_ sel: LocationSelection) {
+        selectedLocation = sel
+        placeName = sel.name
+        loadSelected()
+    }
 }
