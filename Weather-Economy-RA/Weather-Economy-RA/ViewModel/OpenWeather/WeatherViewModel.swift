@@ -34,6 +34,7 @@ extension WeatherViewModel {
                     self.cloudiness = data.current.clouds
                     self.condition = data.current.weather.first?.main
                     self.rain1h = data.current.rain?.oneHour
+                    self.recomputeEstimatesFromCurrent()
                     
                 case .failure(let error):
                     self.errorMessage = error.localizedDescription
@@ -52,5 +53,28 @@ extension WeatherViewModel {
         selectedLocation = sel
         placeName = sel.name
         loadSelected()
+    }
+    
+    func applySolarPrefs(_ prefs: SolarPrefs) {
+        solarPrefs = prefs
+        recomputeEstimatesFromCurrent()
+    }
+}
+
+private extension WeatherViewModel {
+    func recomputeEstimatesFromCurrent() {
+        guard let uvi = uvi else {
+            estimatedKWh = nil
+            estimatedEUR = nil
+            return
+        }
+        
+        let uviFactor = max(0, min(uvi / 11.0, 1.0))
+        let cloudFactor = 1.0 - Double(cloudiness ?? 0) / 100.0
+        let irradianceFactor = max(0, uviFactor * cloudFactor)
+        let kwh = solarPrefs.capacityKwp * solarPrefs.efficiency * irradianceFactor
+        
+        estimatedKWh = kwh
+        estimatedEUR = kwh * solarPrefs.tariffEurPerKwh
     }
 }
