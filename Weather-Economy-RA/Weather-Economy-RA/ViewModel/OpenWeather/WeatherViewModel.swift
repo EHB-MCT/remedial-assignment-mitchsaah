@@ -52,12 +52,44 @@ extension WeatherViewModel {
     func updateLocation(_ sel: LocationSelection) {
         selectedLocation = sel
         placeName = sel.name
+        UserPrefsService.saveLocation(sel)
         loadSelected()
     }
     
     func applySolarPrefs(_ prefs: SolarPrefs) {
         solarPrefs = prefs
+        UserPrefsService.saveSolar(prefs)
         recomputeEstimatesFromCurrent()
+    }
+    
+    func bootstrapFromPrefs(completion: (() -> Void)? = nil) {
+        let group = DispatchGroup()
+        var loadedLocation: LocationSelection?
+        var loadedSolar: SolarPrefs?
+        
+        group.enter()
+        UserPrefsService.loadLocation { sel in
+            loadedLocation = sel
+            group.leave()
+        }
+        
+        group.enter()
+        UserPrefsService.loadSolar { prefs in
+            loadedSolar = prefs
+            group.leave()
+        }
+        
+        group.notify(queue: .main) {
+            if let sel = loadedLocation {
+                self.selectedLocation = sel
+                self.placeName = sel.name
+            }
+            if let prefs = loadedSolar {
+                self.solarPrefs = prefs
+            }
+            self.loadSelected()
+            completion?()
+        }
     }
 }
 
