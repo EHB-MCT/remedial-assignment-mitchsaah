@@ -26,6 +26,27 @@ struct OnboardingView: View {
                     }
                     .buttonStyle(.borderedProminent)
                     .disabled(selectedLocation == nil)
+                }else {
+                    Text("Tell us about your solar setup").font(.title2).bold().frame(maxWidth: .infinity, alignment: .leading)
+                    SolarPrefsForm(prefs: prefs) { saved in
+                        prefs = saved
+                    }
+                    .frame(maxHeight: 480)
+
+                    Button {
+                        guard let sel = selectedLocation else { return }
+                        onCompleted(sel, prefs)
+                    } label: {
+                        Text("Finish")
+                            .frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(.borderedProminent)
+                }
+
+                if let onSkip {
+                    Button("Skip for now", action: onSkip)
+                        .font(.footnote)
+                        .foregroundColor(.secondary)
                 }
             }
                 .padding()
