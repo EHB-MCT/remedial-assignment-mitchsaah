@@ -1,8 +1,10 @@
 import SwiftUI
+import FirebaseAuth
 
 struct DashboardView: View {
     @EnvironmentObject private var appState: AppState
     @StateObject private var weatherVM = WeatherViewModel()
+    @State private var showOnboarding = false
     
     private var loggedInIdentity: String {
         if let user = Auth.auth().currentUser {
@@ -60,6 +62,25 @@ struct DashboardView: View {
             }
         }
         .padding()
-        .onAppear { weatherVM.load() }
+        .onAppear {
+            weatherVM.bootstrapFromPrefs {
+                showOnboarding = (weatherVM.selectedLocation.name == LocationSelection.brussels.name)
+                weatherVM.load()
+            }
+        }
+        .fullScreenCover(isPresented: $showOnboarding) {
+            OnboardingView(
+                onCompleted: { location, solar in
+                    UserPrefsService.saveLocation(location)
+                    UserPrefsService.saveSolar(solar)
+                    weatherVM.updateLocation(location)
+                    weatherVM.applySolarPrefs(solar)
+                    showOnboarding = false
+                },
+                onSkip: {
+                    showOnboarding = false
+                }
+            )
+        }
     }
 }
