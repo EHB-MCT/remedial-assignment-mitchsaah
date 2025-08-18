@@ -14,11 +14,40 @@ struct LocationPickerView: View {
                 TextField("Search city or address", text: $query)
                     .textFieldStyle(.roundedBorder)
                 
-                Button("Search") {}
+                Button("Search") {
+                    guard !query.trimmingCharacters(in: .whitespaces).isEmpty else { return }
+                    isSearching = true; results = []; error = nil
+                    GeocodingService.search(query) { res in
+                        DispatchQueue.main.async {
+                            self.isSearching = false
+                            switch res {
+                            case .success(let items): self.results = items
+                            case .failure(let e): self.error = e.localizedDescription
+                            }
+                        }
+                    }
+                }
                     .buttonStyle(.borderedProminent)
             }
             
-            Button {} label: {
+            Button {
+                error = nil
+                LocationService.shared.requestOnce { res in
+                    DispatchQueue.main.async {
+                        switch res {
+                        case .success(let coord):
+                            onSelect(.init(
+                                name: "Current Location",
+                                lat: coord.latitude,
+                                lon: coord.longitude,
+                                source: .device
+                            ))
+                        case .failure(let e):
+                            error = e.localizedDescription
+                        }
+                    }
+                }
+            } label: {
                 Label("Use Current Location", systemImage: "location.fill")
                     .frame(maxWidth: .infinity)
             }
