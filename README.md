@@ -7,7 +7,6 @@ I made this app to simulate an energy economy for users based on local weather. 
 - **Persistence:** Firebase Firestore (users, preferences, readings)
 - **External data:** OpenWeather (3.0) for forecast/solar inputs
 - **Platform:** iOS (SwiftUI), FirebaseAuth, Firestore, Google Sign-In
-## Firestore Data Model
 
 ## 2. Branch strategy
 ### setup/dependencies
