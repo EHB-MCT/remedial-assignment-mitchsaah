@@ -19,6 +19,33 @@ struct SolarPrefsForm: View {
                     .multilineTextAlignment(.trailing)
                     Text("kWp")
                 }
+                
+                HStack {
+                    Text("Efficiency")
+                    Spacer()
+                    TextField(
+                        "",
+                        value: $prefs.efficiency,
+                        format: .number.precision(.fractionLength(2))
+                    )
+                    .keyboardType(.decimalPad)
+                    .multilineTextAlignment(.trailing)
+                }
+            }
+
+            Section("Economy") {
+                HStack {
+                    Text("Tariff")
+                    Spacer()
+                    TextField(
+                        "€/kWh",
+                        value: $prefs.tariffEurPerKwh,
+                        format: .number.precision(.fractionLength(2))
+                    )
+                    .keyboardType(.decimalPad)
+                    .multilineTextAlignment(.trailing)
+                    Text("€/kWh")
+                }
             }
         }
         Button("Save") { onSave(prefs) }
